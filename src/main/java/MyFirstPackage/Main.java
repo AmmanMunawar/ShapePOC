@@ -33,7 +33,7 @@ class Rectangle extends Shape{
     public void draw(){
         System.out.println("Rectangle Points for X = " +  this.x + "  Rectangle Points for Y = "
                 + this.y +"  Rectangle Points for width = "
-                + this.width +"  Rectangle Points for height = " +this.height);
+                + this.width +"  Rectangle = " +this.height);
     }
 }
 //class Pentagone extends Shape{
