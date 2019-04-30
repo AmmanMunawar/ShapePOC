@@ -16,7 +16,7 @@ class Circle extends Shape{
     }
     public void draw(){
         System.out.println("Circle Points for X = " +  this.x + "  Circle Points for Y = "
-                + this.y +"  Circle Points for Radius = " + this.radius);
+                + this.y +"  Circle = " + this.radius);
     }
 }
 class Rectangle extends Shape{
