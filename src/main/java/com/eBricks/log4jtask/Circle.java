@@ -8,7 +8,7 @@ class Circle extends Shape{
     private int y;
     private int radius;
     //creating logger objects\
-    private static final Logger LOGGER = LogManager.getLogger(Shape.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(Circle.class.getName());
     public Circle(int x,int y ,int radius){
         this.x = x;
         this.y = y;
@@ -16,7 +16,8 @@ class Circle extends Shape{
     }
     public void draw(){
         System.out.println("This is Circle class draw function");
-        LOGGER.debug("Debug Message Logged in Circle Class!!!");
+        LOGGER.fatal("Debug Message Logged in Circle Class!!!");
+        LOGGER.fatal("Fatal Message Logged in Circle Class!!!");
 
 //        System.out.println("Circle Points for X = " +  this.x + "  Circle Points for Y = "
 //                + this.y +"  Circle Points for Radius = " + this.radius);

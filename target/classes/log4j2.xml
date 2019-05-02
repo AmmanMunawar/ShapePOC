@@ -8,7 +8,15 @@
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
         </Console>
-        <RollingFile name="fileLogger" fileName="${basePath}/MainClass.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
+        <RollingFile name="Main" fileName="${basePath}/MainClass.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+        <RollingFile name="Circle" fileName="${basePath}/CircleClass.log" filePattern="${basePath}/app-info-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
@@ -17,15 +25,16 @@
             </Policies>
         </RollingFile>
 
-
     </Appenders>
     <Loggers>
 
         <Logger name="com.eBricks.log4jtask.Main" level="debug" additivity="true">
-            <Appender-ref ref="fileLogger" level="debug" />
+            <Appender-ref ref="Main" level="debug" />
         </Logger>
 
-
+        <Logger name="com.eBricks.log4jtask.Circle" level="debug" additivity="true">
+            <Appender-ref ref="Circle" level="debug" />
+        </Logger>
 
         <Root level="debug" additivity="false">
             <appender-ref ref="console" />
