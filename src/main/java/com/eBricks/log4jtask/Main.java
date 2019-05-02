@@ -17,7 +17,7 @@ public class Main {
 
         //these are main class logger
         System.out.println("Hello world!!");
-        LOGGER.debug("Debug Message Logged in Main Class!!!");
+        LOGGER.debug("Logged in Main Class Debug !!!");
 //        LOGGER.info("Info Message Logged !!!");
 //        LOGGER.fatal("This is an Fatal message");
         //LOGGER.error("Error Message Logged !!!", new NullPointerException("NullError"));
