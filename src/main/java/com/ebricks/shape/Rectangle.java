@@ -1,4 +1,4 @@
-package com.eBricks.log4jtask;
+package com.ebricks.shape;
 
 class Rectangle extends Shape{
     private int x;

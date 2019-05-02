@@ -28,11 +28,11 @@
     </Appenders>
     <Loggers>
 
-        <Logger name="com.eBricks.log4jtask.Main" level="debug" additivity="true">
+        <Logger name="com.ebricks.shape.Main" level="debug" additivity="true">
             <Appender-ref ref="Main" level="debug" />
         </Logger>
 
-        <Logger name="com.eBricks.log4jtask.Circle" level="debug" additivity="true">
+        <Logger name="com.ebricks.shape.Circle" level="debug" additivity="true">
             <Appender-ref ref="Circle" level="debug" />
         </Logger>
 

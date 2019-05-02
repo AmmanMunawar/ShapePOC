@@ -1,4 +1,4 @@
-package com.eBricks.log4jtask;
+package com.ebricks.shape;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
