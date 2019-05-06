@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class Main {
+    private static final Logger LOGGER = LogManager.getLogger(Main.class.getName());
     public static void main(String[] args) throws IOException {
-
+        LOGGER.debug("Debug Message Logged in Circle Class!!!");
         ObjectMapper objectMapper = new ObjectMapper();
         Canvas canvas = objectMapper.readValue(new File("jsonfile.json"), Canvas.class);
         ExecutorService executor = Executors.newFixedThreadPool(1);
