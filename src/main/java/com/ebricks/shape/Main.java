@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -19,14 +19,25 @@ public class Main {
         ObjectMapper objectMapper = new ObjectMapper();
         Canvas canvas = objectMapper.readValue(new File("jsonfile.json"), Canvas.class);
         ExecutorService executor = Executors.newFixedThreadPool(1);
+        List<Future> futures = new ArrayList<Future>();
         for (final Shape shape : canvas.getShapeList()) {
-                executor.execute(new Runnable() {
-                public void run() {
-                    shape.draw();
+                Future<Shape> shapeFuture = executor.submit(new Callable<Shape>() {
+                    public Shape call() {
+                        shape.draw();
+                        return shape;
+                    }
+            }
+            );
+                futures.add(shapeFuture);
+        }
+        for(Future<Shape> future : futures){
+            try {
 
-//                    System.out.println("Hello world");
-                }
-            });
+                System.out.println(new Date()+ "::"+future.get());
+            }
+            catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
         }
         executor.shutdown();
     }
