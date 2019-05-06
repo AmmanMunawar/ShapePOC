@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Circle.class),
         @JsonSubTypes.Type(value = Rectangle.class, name = "Rectangle")
-//        @JsonSubTypes.Type(value = Pentagon.class)
+
 })
 public class Shape{
     public Shape() {
