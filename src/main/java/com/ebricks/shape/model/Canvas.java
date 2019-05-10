@@ -1,9 +1,9 @@
-package com.ebricks.shape.models;
+package com.ebricks.shape.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Canvas {
     private List<Shape> shapeList;
 
@@ -12,9 +12,7 @@ public class Canvas {
     }
 
     public Canvas() {
-
     }
-
     public List<Shape> getShapeList() {
         return shapeList;
     }

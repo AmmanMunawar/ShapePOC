@@ -1,4 +1,4 @@
-package com.ebricks.shape.models;
+package com.ebricks.shape.model;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -8,14 +8,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Rectangle.class, name = "Rectangle")
 
 })
+
 public class Shape{
-    public Shape() {
-    }
 
     public void draw(){
-
         System.out.println("Shape draw function");
     }
-
 
 }
