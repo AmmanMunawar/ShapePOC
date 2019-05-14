@@ -46,16 +46,20 @@ public class ShapeProcessor {
 
     }
 
-    public void process() throws IOException {
+    public void process()  {
 
-        servletService.postShape(this.objectToJsonString());
+        try {
+            servletService.postShape(this.objectToJsonString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for (final Shape shape : this.canvas.getShapeList()) {
             Future<ShapeExecutor> shapeExecutorFuture = this.executor.submit(new Callable<ShapeExecutor>() {
                 public ShapeExecutor call() {
                     ShapeExecutor shapeExecutor = new ShapeFactory().getShapeExecuter(shape);
                     shapeExecutor.execute();
-                    shape.draw();
+//                    shape.draw();
 //                    LOGGER.info(shape.getClass().getSimpleName());
                     return shapeExecutor;
                 }

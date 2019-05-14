@@ -13,12 +13,20 @@ import java.util.List;
 })
 
 public class Shape{
-
+    private String type;
     public Shape() {
     }
 
     public void draw(){
         System.out.println("Shape draw function");
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public List<Shape> createShapeList(){
