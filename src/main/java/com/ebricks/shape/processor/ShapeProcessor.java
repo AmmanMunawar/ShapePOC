@@ -47,16 +47,16 @@ public class ShapeProcessor {
 
         servletService.postShape(this.objectToJsonString());
 
-//        for (final Shape shape : this.canvas.getShapeList()) {
-//            Future<Shape> shapeFuture = this.executor.submit(new Callable<Shape>() {
-//                public Shape call() {
-//                    shape.draw();
-//                    return shape;
-//                }
-//            }
-//            );
-//            this.shapesFuture.add(shapeFuture);
-//        }
+        for (final Shape shape : this.canvas.getShapeList()) {
+            Future<Shape> shapeFuture = this.executor.submit(new Callable<Shape>() {
+                public Shape call() {
+                    shape.draw();
+                    return shape;
+                }
+            }
+            );
+            this.shapesFuture.add(shapeFuture);
+        }
 
         for(Future<Shape> future : this.shapesFuture){
             try {
