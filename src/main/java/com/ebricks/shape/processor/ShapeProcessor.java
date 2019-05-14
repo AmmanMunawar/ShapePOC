@@ -31,6 +31,7 @@ public class ShapeProcessor {
         this.canvas = objectMapper.readValue(servletService.downloadShapes(), Canvas.class);
         this.executor = Executors.newFixedThreadPool(1);
         this.shapeExecutorFuture = new ArrayList<Future<ShapeExecutor>>();
+
     }
 
     public String objectToJsonString() throws JsonProcessingException {
@@ -52,8 +53,9 @@ public class ShapeProcessor {
         for (final Shape shape : this.canvas.getShapeList()) {
             Future<ShapeExecutor> shapeExecutorFuture = this.executor.submit(new Callable<ShapeExecutor>() {
                 public ShapeExecutor call() {
-                    ShapeExecutor shapeExecutor = new ShapeFactory().getShape(shape.getClass().getSimpleName());
-                    shapeExecutor.draw();
+                    ShapeExecutor shapeExecutor = new ShapeFactory().getShapeExecuter(shape);
+                    shapeExecutor.execute();
+                    shape.draw();
 //                    LOGGER.info(shape.getClass().getSimpleName());
                     return shapeExecutor;
                 }

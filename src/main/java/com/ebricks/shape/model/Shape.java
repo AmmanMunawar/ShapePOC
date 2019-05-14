@@ -8,7 +8,7 @@ import java.util.List;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Circle.class),
-        @JsonSubTypes.Type(value = Rectangle.class, name = "Rectangle")
+        @JsonSubTypes.Type(value = Rectangle.class)
 
 })
 

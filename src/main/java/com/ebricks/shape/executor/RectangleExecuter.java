@@ -7,7 +7,9 @@ import org.apache.logging.log4j.Logger;
 public class RectangleExecuter extends ShapeExecutor {
 
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
-    public void draw() {
-        LOGGER.info("Inside Rectangle::draw() method.");
+    public void execute() {
+
+        this.shapeobject.draw();
+
     }
 }

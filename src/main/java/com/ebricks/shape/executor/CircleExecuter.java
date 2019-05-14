@@ -8,7 +8,9 @@ public class CircleExecuter extends ShapeExecutor {
 
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
 
-    public void draw() {
-        LOGGER.info("Inside Circle::draw() method.");
+    public void execute() {
+
+        this.shapeobject.draw();
+
     }
 }
