@@ -14,6 +14,9 @@ import java.util.List;
 
 public class Shape{
 
+    public Shape() {
+    }
+
     public void draw(){
         System.out.println("Shape draw function");
     }
@@ -29,6 +32,5 @@ public class Shape{
 
     }
 
-    public Shape() {
-    }
+
 }

@@ -12,12 +12,16 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.*;
 
-public class ServletService {
+public class ShapeService {
+
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
-    private Configuration configuration;
+    private Configuration configuration = Configuration.getInstance();
+
+    public ShapeService(){
+
+    }
 
     public String downloadShapes() throws IOException {
 
@@ -54,17 +58,5 @@ public class ServletService {
         }
     }
 
-    public ServletService(){
 
-        if(!Configuration.checkifobjectcreated()){
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            try {
-                this.configuration = objectMapper.readValue(new FileReader("C:\\Users\\Aman Munawar\\IdeaProjects\\log4j2practise\\src\\main\\resources\\config.json"),Configuration.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
 }

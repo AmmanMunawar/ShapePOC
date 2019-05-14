@@ -1,17 +1,17 @@
 package com.ebricks.shape.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Configuration {
 
-    private static boolean iscreated = false;
+    private static Configuration instance = null;
     private String urlString = "";
 
-    public static boolean checkifobjectcreated(){
+    private Configuration() {
 
-        if (iscreated==false){
-            iscreated = true;
-            return false;
-        }
-        return iscreated;
+        this.urlString = urlString;
     }
 
     public void setUrlString(String urlString) {
@@ -24,8 +24,17 @@ public class Configuration {
         return urlString;
     }
 
-    private Configuration() {
+    public static Configuration getInstance() {
 
-        this.urlString = urlString;
+        if (instance==null){
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                instance = objectMapper.readValue(new FileReader("C:\\Users\\Aman Munawar\\IdeaProjects\\log4j2practise\\src\\main\\resources\\config.json")
+                        ,Configuration.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return instance;
     }
 }

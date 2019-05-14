@@ -12,7 +12,12 @@ class Circle extends Shape{
     private int y;
     private int radius;
 
-    //creating logger objects\
+    public Circle(int x, int y, int radius) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+    }
+
     public int getX() {
         return x;
     }
@@ -35,13 +40,6 @@ class Circle extends Shape{
 
     public Circle() {
     }
-
-    public Circle(int x, int y, int radius) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-    }
-
     public void draw(){
         LOGGER.info("This is Circle class draw function");
     }

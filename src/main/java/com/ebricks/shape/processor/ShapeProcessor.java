@@ -2,7 +2,7 @@ package com.ebricks.shape.processor;
 
 import com.ebricks.shape.model.Canvas;
 import com.ebricks.shape.model.Shape;
-import com.ebricks.shape.service.ServletService;
+import com.ebricks.shape.service.ShapeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +21,7 @@ public class ShapeProcessor {
     private Shape shape;
     private ExecutorService executor;
     private List<Future<Shape>> shapesFuture;
-    private static ServletService servletService = new ServletService();
+    private static ShapeService servletService = new ShapeService();
 
     public void init() throws IOException {
 
