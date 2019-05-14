@@ -33,6 +33,15 @@ class Circle extends Shape{
         this.radius = radius;
     }
 
+    public Circle() {
+    }
+
+    public Circle(int x, int y, int radius) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+    }
+
     public void draw(){
         LOGGER.info("This is Circle class draw function");
     }

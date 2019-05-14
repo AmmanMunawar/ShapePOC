@@ -44,6 +44,16 @@ class Rectangle extends Shape{
         this.height = height;
     }
 
+    public Rectangle() {
+    }
+
+    public Rectangle(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
     public void draw(){
 
         LOGGER.info("This is Rectangle class draw function");
