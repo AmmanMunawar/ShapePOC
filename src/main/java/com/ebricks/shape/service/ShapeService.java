@@ -2,7 +2,6 @@ package com.ebricks.shape.service;
 
 import com.ebricks.shape.config.Configuration;
 import com.ebricks.shape.processor.ShapeProcessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -57,6 +56,4 @@ public class ShapeService {
             LOGGER.error("Error!! While Posting ");
         }
     }
-
-
 }
