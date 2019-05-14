@@ -1,5 +1,7 @@
 package com.ebricks.shape.processor;
 
+import com.ebricks.shape.executor.ShapeExecutor;
+import com.ebricks.shape.executor.ShapeFactory;
 import com.ebricks.shape.model.Canvas;
 import com.ebricks.shape.model.Shape;
 import com.ebricks.shape.service.ShapeService;
@@ -20,7 +22,7 @@ public class ShapeProcessor {
     private Canvas canvas;
     private Shape shape;
     private ExecutorService executor;
-    private List<Future<Shape>> shapesFuture;
+    private List<Future<ShapeExecutor>> shapeExecutorFuture;
     private static ShapeService servletService = new ShapeService();
 
     public void init() throws IOException {
@@ -28,7 +30,7 @@ public class ShapeProcessor {
         this.objectMapper = new ObjectMapper();
         this.canvas = objectMapper.readValue(servletService.downloadShapes(), Canvas.class);
         this.executor = Executors.newFixedThreadPool(1);
-        this.shapesFuture = new ArrayList<Future<Shape>>();
+        this.shapeExecutorFuture = new ArrayList<Future<ShapeExecutor>>();
     }
 
     public String objectToJsonString() throws JsonProcessingException {
@@ -48,17 +50,19 @@ public class ShapeProcessor {
         servletService.postShape(this.objectToJsonString());
 
         for (final Shape shape : this.canvas.getShapeList()) {
-            Future<Shape> shapeFuture = this.executor.submit(new Callable<Shape>() {
-                public Shape call() {
-                    shape.draw();
-                    return shape;
+            Future<ShapeExecutor> shapeExecutorFuture = this.executor.submit(new Callable<ShapeExecutor>() {
+                public ShapeExecutor call() {
+                    ShapeExecutor shapeExecutor = new ShapeFactory().getShape(shape.getClass().getSimpleName());
+                    shapeExecutor.draw();
+//                    LOGGER.info(shape.getClass().getSimpleName());
+                    return shapeExecutor;
                 }
             }
             );
-            this.shapesFuture.add(shapeFuture);
+            this.shapeExecutorFuture.add(shapeExecutorFuture);
         }
 
-        for(Future<Shape> future : this.shapesFuture){
+        for(Future<ShapeExecutor> future : this.shapeExecutorFuture){
             try {
 
                 LOGGER.info(new Date()+ "::"+future.get());
