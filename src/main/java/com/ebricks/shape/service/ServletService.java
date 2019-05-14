@@ -1,22 +1,23 @@
 package com.ebricks.shape.service;
 
 import com.ebricks.shape.config.Configuration;
+import com.ebricks.shape.processor.ShapeProcessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 
 public class ServletService {
-
+    private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
     private Configuration configuration;
-
 
     public String downloadShapes() throws IOException {
 
@@ -30,7 +31,7 @@ public class ServletService {
         }
 
         else{
-            System.out.println("Error!! While Posting ");
+            LOGGER.error("Error!! While Posting ");
         }
         return "Could not get";
     }
@@ -45,11 +46,11 @@ public class ServletService {
         HttpResponse response = shapeHttpClient.execute(shapePostRequest);
 
         if (response.getStatusLine().getStatusCode() == 200) {
-            System.out.println("Successfully Posted");
+            LOGGER.info("Successfully Posted");
         }
 
         else{
-            System.out.println("Error!! While Posting ");
+            LOGGER.error("Error!! While Posting ");
         }
     }
 
