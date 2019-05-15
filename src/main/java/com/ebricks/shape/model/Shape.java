@@ -12,10 +12,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
 
         @JsonSubTypes.Type(value = Circle.class, name = "Circle"),
-        @JsonSubTypes.Type(value = Rectangle.class,name = "Rectangle")
+        @JsonSubTypes.Type(value = Rectangle.class, name = "Rectangle")
 
 })
-public abstract class Shape{
+public abstract class Shape {
+
     private String type;
 
     public Shape() {
@@ -28,5 +29,6 @@ public abstract class Shape{
     public void setType(String type) {
         this.type = type;
     }
+
     public abstract void draw();
 }
