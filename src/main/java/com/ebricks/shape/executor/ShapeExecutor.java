@@ -5,15 +5,13 @@ import com.ebricks.shape.processor.ShapeProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ShapeExecutor {
+public abstract class ShapeExecutor {
 
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
     protected Shape shape;
 
     public ShapeExecutor(Shape shape) {
-
         this.shape = shape;
-
     }
 
     public Shape getShape() {
@@ -24,8 +22,5 @@ public class ShapeExecutor {
         this.shape = shape;
     }
 
-    public ShapeExecuterResponse execute(){
-         this.shape.draw();
-        return new ShapeExecuterResponse(this.shape);
-    }
+    public abstract ShapeExecuterResponse execute();
 }

@@ -4,6 +4,11 @@ import com.ebricks.shape.model.Shape;
 
 public class ShapeFactory {
 
+    private static ShapeFactory instance = null;
+
+    private ShapeFactory() {
+    }
+
     //use getShape method to get object of type shape
     public ShapeExecutor getShapeExecuter(Shape shape) {
 
@@ -11,14 +16,21 @@ public class ShapeFactory {
             return null;
         }
 
-        if (shape.getClass().getSimpleName().equalsIgnoreCase("CIRCLE")) {
+        if (shape.getType().equals("Circle")) {
 
             return new CircleExecuter(shape);
 
-        } else if (shape.getClass().getSimpleName().equalsIgnoreCase("RECTANGLE")) {
+        } else if (shape.getType().equals("Rectangle")) {
             return new RectangleExecuter(shape);
-
         }
         return null;
+    }
+    public static ShapeFactory getInstance(){
+
+        if(instance==null){
+            instance = new ShapeFactory();
+            return instance;
+        }
+        return instance;
     }
 }

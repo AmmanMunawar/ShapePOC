@@ -29,7 +29,7 @@ public class Configuration {
         if (instance==null){
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                instance = objectMapper.readValue(new FileReader("C:\\Users\\Aman Munawar\\IdeaProjects\\log4j2practise\\src\\main\\resources\\config.json")
+                instance = objectMapper.readValue(new FileReader(System.getProperty("user.dir")+"/resources/config.json")
                         ,Configuration.class);
             } catch (IOException e) {
                 e.printStackTrace();

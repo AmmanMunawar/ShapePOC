@@ -13,10 +13,10 @@ public class ShapeExecuterResponse {
 
     public ShapeExecuterResponse(Shape shape){
         this.shape = shape;
-        this.shapeSubClassType = this.shape.getClass().getSimpleName();
+        this.shapeSubClassType = this.shape.getType();
     }
 
-    public void getShapeExecuterResponse(){
+    public void logMessage(){
 
         LOGGER.info("This is the Response of " + this.shapeSubClassType);
 

@@ -17,8 +17,9 @@ public class ShapeService {
 
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
     private Configuration configuration = Configuration.getInstance();
+    private static ShapeService instance = null;
 
-    public ShapeService(){
+    private ShapeService(){
 
     }
 
@@ -55,5 +56,13 @@ public class ShapeService {
         else{
             LOGGER.error("Error!! While Posting ");
         }
+    }
+
+    public static ShapeService getInstance(){
+        if (instance==null){
+            instance = new ShapeService();
+            return instance;
+        }
+        return instance;
     }
 }
