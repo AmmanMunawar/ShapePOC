@@ -1,6 +1,11 @@
 package com.ebricks.shape.processor;
 
+import com.ebricks.shape.executor.ShapeExecuterResponse;
+import com.ebricks.shape.executor.ShapeExecutor;
+import com.ebricks.shape.executor.ShapeFactory;
 import com.ebricks.shape.model.Canvas;
+import com.ebricks.shape.model.Circle;
+import com.ebricks.shape.model.Rectangle;
 import com.ebricks.shape.model.Shape;
 import com.ebricks.shape.service.ShapeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -18,56 +22,77 @@ public class ShapeProcessor {
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
     private ObjectMapper objectMapper;
     private Canvas canvas;
-    private Shape shape;
     private ExecutorService executor;
-    private List<Future<Shape>> shapesFuture;
-    private static ShapeService servletService = new ShapeService();
+    private List<Future<ShapeExecuterResponse>> shapeExecutorResponseFuture;
+    private ShapeService shapeService = ShapeService.getInstance();
 
     public void init() throws IOException {
 
         this.objectMapper = new ObjectMapper();
-        this.canvas = objectMapper.readValue(servletService.downloadShapes(), Canvas.class);
-        this.executor = Executors.newFixedThreadPool(1);
-        this.shapesFuture = new ArrayList<Future<Shape>>();
-    }
-
-    public String objectToJsonString() throws JsonProcessingException {
-
-        canvas = null;
-        canvas = new Canvas();
-        shape = null;
-        shape = new Shape();
-        canvas.setShapeList(shape.createShapeList());// this create shapelist function will return list of shape
-        String objecttojsonstring = this.objectMapper.writeValueAsString(canvas);
-        return objecttojsonstring;
+        this.canvas = objectMapper.readValue(shapeService.downloadShapes(), Canvas.class);
+        this.executor = Executors.newFixedThreadPool(3);
+        this.shapeExecutorResponseFuture = new ArrayList<Future<ShapeExecuterResponse>>();
 
     }
 
-    public void process() throws IOException {
 
-        servletService.postShape(this.objectToJsonString());
 
-//        for (final Shape shape : this.canvas.getShapeList()) {
-//            Future<Shape> shapeFuture = this.executor.submit(new Callable<Shape>() {
-//                public Shape call() {
-//                    shape.draw();
-//                    return shape;
-//                }
-//            }
-//            );
-//            this.shapesFuture.add(shapeFuture);
-//        }
+    public void process()  {
 
-        for(Future<Shape> future : this.shapesFuture){
+        try {
+            shapeService.postShape(this.shapeObjectToJsonString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (final Shape shape : this.canvas.getShapeList()) {
+
+            Future<ShapeExecuterResponse> shapeExecuterResponseFuture =
+                    this.executor.submit(new Callable<ShapeExecuterResponse>() {
+
+                public ShapeExecuterResponse call() {
+                    ShapeFactory shapeFactory = ShapeFactory.getInstance();
+                    ShapeExecutor shapeExecuter = shapeFactory.getShapeExecuter(shape);
+                    ShapeExecuterResponse shapeExecuterResponse = shapeExecuter.execute();
+                    return shapeExecuterResponse;
+                }
+
+            }
+            );
+            this.shapeExecutorResponseFuture.add(shapeExecuterResponseFuture);
+        }
+
+        for(Future<ShapeExecuterResponse> shapeExecuterResponseFuture : this.shapeExecutorResponseFuture){
             try {
 
-                LOGGER.info(new Date()+ "::"+future.get());
+                shapeExecuterResponseFuture.get().logMessage();
+
             }
             catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    public List<Shape> createShapeList(){
+
+        List<Shape> shapeList = new ArrayList<>();
+        Circle circle = new Circle(1,2,3);
+        Rectangle rectangle = new Rectangle(2,3,1,4);
+        shapeList.add(circle);
+        shapeList.add(rectangle);
+        return shapeList;
+
+    }
+
+    public String shapeObjectToJsonString() throws JsonProcessingException {
+
+        Canvas canvas = new Canvas();
+        canvas.setShapeList(this.createShapeList());// this create shapelist function will return list of shape
+        String shapeObjecttojsonstring = this.objectMapper.writeValueAsString(canvas);
+        return shapeObjecttojsonstring;
+    }
+
 
     public void end(){
 

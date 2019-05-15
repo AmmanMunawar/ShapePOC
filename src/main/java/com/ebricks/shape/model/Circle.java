@@ -1,11 +1,9 @@
 package com.ebricks.shape.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@JsonTypeName("Circle")
-class Circle extends Shape{
+public class Circle extends Shape{
 
     private static final Logger LOGGER = LogManager.getLogger(Circle.class.getName());
     private int x;
@@ -16,6 +14,9 @@ class Circle extends Shape{
         this.x = x;
         this.y = y;
         this.radius = radius;
+    }
+
+    public Circle() {
     }
 
     public int getX() {
@@ -38,8 +39,7 @@ class Circle extends Shape{
         this.radius = radius;
     }
 
-    public Circle() {
-    }
+
     public void draw(){
         LOGGER.info("This is Circle class draw function");
     }
