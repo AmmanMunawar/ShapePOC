@@ -10,12 +10,11 @@ public class CircleExecuter extends ShapeExecutor {
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
 
     public CircleExecuter(Shape shape) {
-        setShape(shape);
+        super(shape);
     }
 
-    public void execute() {
-
+    public ShapeExecuterResponse execute(){
         this.shape.draw();
-        LOGGER.info("Calling by Circle Executer");
+        return new ShapeExecuterResponse(this.shape);
     }
 }

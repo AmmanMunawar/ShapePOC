@@ -1,5 +1,6 @@
 package com.ebricks.shape.processor;
 
+import com.ebricks.shape.executor.ShapeExecuterResponse;
 import com.ebricks.shape.executor.ShapeExecutor;
 import com.ebricks.shape.executor.ShapeFactory;
 import com.ebricks.shape.model.Canvas;
@@ -22,19 +23,19 @@ public class ShapeProcessor {
     private Canvas canvas;
     private Shape shape;
     private ExecutorService executor;
-    private List<Future<ShapeExecutor>> shapeExecutorFuture;
-    private static ShapeService servletService = new ShapeService();
+    private List<Future<ShapeExecuterResponse>> shapeExecutorResponseFuture;
+    private static ShapeService shapeService = new ShapeService();
 
     public void init() throws IOException {
 
         this.objectMapper = new ObjectMapper();
-        this.canvas = objectMapper.readValue(servletService.downloadShapes(), Canvas.class);
-        this.executor = Executors.newFixedThreadPool(1);
-        this.shapeExecutorFuture = new ArrayList<Future<ShapeExecutor>>();
+        this.canvas = objectMapper.readValue(shapeService.downloadShapes(), Canvas.class);
+        this.executor = Executors.newFixedThreadPool(3);
+        this.shapeExecutorResponseFuture = new ArrayList<Future<ShapeExecuterResponse>>();
 
     }
 
-    public String objectToJsonString() throws JsonProcessingException {
+    public String shapeObjectToJsonString() throws JsonProcessingException {
 
         canvas = null;
         canvas = new Canvas();
@@ -49,29 +50,31 @@ public class ShapeProcessor {
     public void process()  {
 
         try {
-            servletService.postShape(this.objectToJsonString());
+            shapeService.postShape(this.shapeObjectToJsonString());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         for (final Shape shape : this.canvas.getShapeList()) {
-            Future<ShapeExecutor> shapeExecutorFuture = this.executor.submit(new Callable<ShapeExecutor>() {
-                public ShapeExecutor call() {
-                    ShapeExecutor shapeExecutor = new ShapeFactory().getShapeExecuter(shape);
-                    shapeExecutor.execute();
+            Future<ShapeExecuterResponse> shapeExecuterResponseFuture = this.executor.submit(new Callable<ShapeExecuterResponse>() {
+                public ShapeExecuterResponse call() {
+                    ShapeExecutor shapeExecuter = new ShapeFactory().getShapeExecuter(shape);
+                    ShapeExecuterResponse shapeExecuterResponse = shapeExecuter.execute();
 //                    shape.draw();
+                    System.out.println(shape.getType());
 //                    LOGGER.info(shape.getClass().getSimpleName());
-                    return shapeExecutor;
+                    return shapeExecuterResponse;
                 }
             }
             );
-            this.shapeExecutorFuture.add(shapeExecutorFuture);
+            this.shapeExecutorResponseFuture.add(shapeExecuterResponseFuture);
         }
 
-        for(Future<ShapeExecutor> future : this.shapeExecutorFuture){
+        for(Future<ShapeExecuterResponse> shapeExecuterResponseFuture : this.shapeExecutorResponseFuture){
             try {
 
-                LOGGER.info(new Date()+ "::"+future.get());
+                shapeExecuterResponseFuture.get().getShapeExecuterResponse();
+
             }
             catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();

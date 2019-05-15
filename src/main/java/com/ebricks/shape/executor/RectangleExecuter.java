@@ -10,13 +10,11 @@ public class RectangleExecuter extends ShapeExecutor {
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
 
     public RectangleExecuter(Shape shape) {
-        setShape(shape);
+        super(shape);
     }
 
-    public void execute() {
-
+    public ShapeExecuterResponse execute(){
         this.shape.draw();
-        LOGGER.info("Calling by Rectangle Executer");
-
+        return new ShapeExecuterResponse(this.shape);
     }
 }

@@ -5,17 +5,18 @@ import com.ebricks.shape.model.Shape;
 public class ShapeFactory {
 
     //use getShape method to get object of type shape
-    public ShapeExecutor getShapeExecuter(Shape shapeType) {
+    public ShapeExecutor getShapeExecuter(Shape shape) {
 
-        if (shapeType == null) {
+        if (shape == null) {
             return null;
         }
 
-        if (shapeType.getClass().getSimpleName().equalsIgnoreCase("CIRCLE")) {
-            return new CircleExecuter(shapeType);
+        if (shape.getClass().getSimpleName().equalsIgnoreCase("CIRCLE")) {
 
-        } else if (shapeType.getClass().getSimpleName().equalsIgnoreCase("RECTANGLE")) {
-            return new RectangleExecuter(shapeType);
+            return new CircleExecuter(shape);
+
+        } else if (shape.getClass().getSimpleName().equalsIgnoreCase("RECTANGLE")) {
+            return new RectangleExecuter(shape);
 
         }
         return null;

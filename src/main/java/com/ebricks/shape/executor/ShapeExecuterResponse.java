@@ -5,27 +5,21 @@ import com.ebricks.shape.processor.ShapeProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ShapeExecutor {
+public class ShapeExecuterResponse {
 
     private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
+    private String shapeSubClassType = "";
     protected Shape shape;
 
-    public ShapeExecutor(Shape shape) {
-
+    public ShapeExecuterResponse(Shape shape){
         this.shape = shape;
+        this.shapeSubClassType = this.shape.getClass().getSimpleName();
+    }
+
+    public void getShapeExecuterResponse(){
+
+        LOGGER.info("This is the Response of " + this.shapeSubClassType);
 
     }
 
-    public Shape getShape() {
-        return shape;
-    }
-
-    public void setShape(Shape shape) {
-        this.shape = shape;
-    }
-
-    public ShapeExecuterResponse execute(){
-         this.shape.draw();
-        return new ShapeExecuterResponse(this.shape);
-    }
 }

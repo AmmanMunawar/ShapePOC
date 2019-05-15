@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@JsonTypeName("Rectangle")
+//@JsonTypeName("Rectangle")
 class Rectangle extends Shape{
 
     private static final Logger LOGGER = LogManager.getLogger(Rectangle.class.getName());
