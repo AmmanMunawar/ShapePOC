@@ -1,25 +1,23 @@
-package com.ebricks.shape.models;
+package com.ebricks.shape.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@JsonTypeName("Rectangle")
-class Rectangle extends Shape{
+public class Rectangle extends Shape{
+
+    private static final Logger LOGGER = LogManager.getLogger(Rectangle.class.getName());
     private int x;
     private int y;
     private int width;
     private int height;
 
-
-    public Rectangle(int x, int y , int width, int height){
-        super();
+    public Rectangle(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
-    public void draw(){
-        System.out.println("This is Rectangle class draw function");
-
+    public Rectangle() {
     }
     public int getX() {
         return x;
@@ -52,7 +50,8 @@ class Rectangle extends Shape{
     public void setHeight(int height) {
         this.height = height;
     }
-    public Rectangle(){
-        super();
+
+    public void draw(){
+        LOGGER.info("This is Rectangle class draw function");
     }
 }
