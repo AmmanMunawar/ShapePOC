@@ -36,8 +36,7 @@ public class ShapeProcessor {
     }
 
 
-
-    public void process()  {
+    public void process() {
 
         try {
             shapeService.postShape(this.shapeObjectToJsonString());
@@ -50,35 +49,34 @@ public class ShapeProcessor {
             Future<ShapeExecuterResponse> shapeExecuterResponseFuture =
                     this.executor.submit(new Callable<ShapeExecuterResponse>() {
 
-                public ShapeExecuterResponse call() {
-                    ShapeFactory shapeFactory = ShapeFactory.getInstance();
-                    ShapeExecutor shapeExecuter = shapeFactory.getShapeExecuter(shape);
-                    ShapeExecuterResponse shapeExecuterResponse = shapeExecuter.execute();
-                    return shapeExecuterResponse;
-                }
+                                             public ShapeExecuterResponse call() {
 
-            }
-            );
+                                                 ShapeExecutor shapeExecuter = ShapeFactory.getInstance().getShapeExecuter(shape);
+                                                 ShapeExecuterResponse shapeExecuterResponse = shapeExecuter.execute();
+                                                 return shapeExecuterResponse;
+                                             }
+
+                                         }
+                    );
             this.shapeExecutorResponseFuture.add(shapeExecuterResponseFuture);
         }
 
-        for(Future<ShapeExecuterResponse> shapeExecuterResponseFuture : this.shapeExecutorResponseFuture){
+        for (Future<ShapeExecuterResponse> shapeExecuterResponseFuture : this.shapeExecutorResponseFuture) {
             try {
 
                 shapeExecuterResponseFuture.get().logMessage();
 
-            }
-            catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+            } catch (InterruptedException | ExecutionException e) {
+                LOGGER.error(e);
             }
         }
     }
 
-    public List<Shape> createShapeList(){
+    public List<Shape> createShapeList() {
 
         List<Shape> shapeList = new ArrayList<>();
-        Circle circle = new Circle(1,2,3);
-        Rectangle rectangle = new Rectangle(2,3,1,4);
+        Circle circle = new Circle(1, 2, 3);
+        Rectangle rectangle = new Rectangle(2, 3, 1, 4);
         shapeList.add(circle);
         shapeList.add(rectangle);
         return shapeList;
@@ -94,13 +92,13 @@ public class ShapeProcessor {
     }
 
 
-    public void end(){
+    public void end() {
 
-        if (this.executor!=null) {
+        if (this.executor != null) {
 
             this.executor.shutdown();
             try {
-                if(!this.executor.awaitTermination(10,TimeUnit.SECONDS)){
+                if (!this.executor.awaitTermination(10, TimeUnit.SECONDS)) {
                     LOGGER.info("Task didn't complete in given time");
                 }
             } catch (InterruptedException e) {

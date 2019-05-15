@@ -4,9 +4,18 @@ import com.ebricks.shape.model.Shape;
 
 public class ShapeFactory {
 
-    private static ShapeFactory instance = null;
+    private static ShapeFactory instance;
 
     private ShapeFactory() {
+    }
+
+    public static ShapeFactory getInstance() {
+
+        if (instance == null) {
+            instance = new ShapeFactory();
+            return instance;
+        }
+        return instance;
     }
 
     //use getShape method to get object of type shape
@@ -25,12 +34,5 @@ public class ShapeFactory {
         }
         return null;
     }
-    public static ShapeFactory getInstance(){
 
-        if(instance==null){
-            instance = new ShapeFactory();
-            return instance;
-        }
-        return instance;
-    }
 }
