@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class ShapeExecutor {
 
-    private static final Logger LOGGER = LogManager.getLogger(ShapeProcessor.class.getName());
     protected Shape shape;
 
     public ShapeExecutor(Shape shape) {

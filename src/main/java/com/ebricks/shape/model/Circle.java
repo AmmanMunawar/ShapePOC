@@ -3,7 +3,7 @@ package com.ebricks.shape.model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Circle extends Shape{
+public class Circle extends Shape {
 
     private static final Logger LOGGER = LogManager.getLogger(Circle.class.getName());
     private int x;
@@ -40,7 +40,7 @@ public class Circle extends Shape{
     }
 
 
-    public void draw(){
+    public void draw() {
         LOGGER.info("This is Circle class draw function");
     }
 

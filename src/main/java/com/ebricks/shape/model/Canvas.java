@@ -12,6 +12,7 @@ public class Canvas {
 
     public Canvas() {
     }
+
     public List<Shape> getShapeList() {
         return shapeList;
     }

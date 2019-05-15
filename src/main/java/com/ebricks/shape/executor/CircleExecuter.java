@@ -8,7 +8,7 @@ public class CircleExecuter extends ShapeExecutor {
         super(shape);
     }
 
-    public ShapeExecuterResponse execute(){
+    public ShapeExecuterResponse execute() {
         this.shape.draw();
         return new ShapeExecuterResponse(this.shape);
     }
